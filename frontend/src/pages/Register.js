@@ -1,14 +1,26 @@
 import { useState } from "react";
 import axios from "axios";
 
+import ChessPatternsetup from "./ChessPatternsetup";
+
 function Register() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [pattern, setPattern] = useState([]);
+
     const registerUser = async (e) => {
 
         e.preventDefault();
+
+        if (pattern.length !== 4) {
+
+            return alert(
+                "Select 4 chess pieces"
+            );
+
+        }
 
         try {
 
@@ -16,7 +28,8 @@ function Register() {
                 "http://localhost:5000/register",
                 {
                     email,
-                    password
+                    password,
+                    chessPattern: pattern
                 }
             );
 
@@ -42,22 +55,25 @@ function Register() {
 
                 <input
                     type="email"
-                    placeholder="Enter Email"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) =>
                         setEmail(e.target.value)
                     }
-                    required
                 />
 
                 <input
                     type="password"
-                    placeholder="Enter Password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) =>
                         setPassword(e.target.value)
                     }
-                    required
+                />
+
+                <ChessPatternsetup
+                    pattern={pattern}
+                    setPattern={setPattern}
                 />
 
                 <button type="submit">

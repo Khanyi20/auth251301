@@ -1,10 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 
+import ChessPatternverify from "./ChessPatternverify";
+
 function Login() {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    const [password, setPassword]
+    = useState("");
+
+    const [show2FA, setShow2FA]
+    = useState(false);
+
+    const [savedPattern, setSavedPattern]
+    = useState([]);
 
     const loginUser = async (e) => {
 
@@ -22,6 +32,12 @@ function Login() {
 
             alert(response.data.message);
 
+            setSavedPattern(
+                response.data.chessPattern
+            );
+
+            setShow2FA(true);
+
         }
 
         catch (error) {
@@ -32,39 +48,56 @@ function Login() {
 
     };
 
+    const loginSuccess = () => {
+
+        alert(
+            "User Fully Authenticated"
+        );
+
+    };
+
     return (
 
         <div className="form-container">
 
             <h2>Login</h2>
 
-            <form onSubmit={loginUser}>
+            {!show2FA ? (
 
-                <input
-                    type="email"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                    required
+                <form onSubmit={loginUser}>
+
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                    />
+
+                    <button type="submit">
+                        Login
+                    </button>
+
+                </form>
+
+            ) : (
+
+                <ChessPatternverify
+                    savedPattern={savedPattern}
+                    onSuccess={loginSuccess}
                 />
 
-                <input
-                    type="password"
-                    placeholder="Enter Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                    required
-                />
-
-                <button type="submit">
-                    Login
-                </button>
-
-            </form>
+            )}
 
         </div>
 
