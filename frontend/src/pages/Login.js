@@ -4,17 +4,10 @@ import axios from "axios";
 import ChessPatternverify from "./ChessPatternverify";
 
 function Login() {
-
     const [email, setEmail] = useState("");
-
-    const [password, setPassword]
-    = useState("");
-
-    const [show2FA, setShow2FA]
-    = useState(false);
-
-    const [savedPattern, setSavedPattern]
-    = useState([]);
+    const [password, setPassword] = useState("");
+    const [show, setShow] = useState(false);
+    const [savedPattern, setSavedPattern] = useState([]);
 
     const loginUser = async (e) => {
 
@@ -31,12 +24,11 @@ function Login() {
             );
 
             alert(response.data.message);
-
             setSavedPattern(
                 response.data.chessPattern
             );
 
-            setShow2FA(true);
+            setShow(true);
 
         }
 
@@ -58,11 +50,12 @@ function Login() {
 
     return (
 
-        <div className="form-container">
+        <div className="form-wrapper">
 
             <h2>Login</h2>
+            <p className= "subtitle">Login to continue</p>
 
-            {!show2FA ? (
+            {!show ? (
 
                 <form onSubmit={loginUser}>
 
@@ -83,13 +76,10 @@ function Login() {
                             setPassword(e.target.value)
                         }
                     />
-
                     <button type="submit">
                         Login
                     </button>
-
                 </form>
-
             ) : (
 
                 <ChessPatternverify
@@ -100,9 +90,7 @@ function Login() {
             )}
 
         </div>
-
     );
-
 }
 
 export default Login;

@@ -1,10 +1,8 @@
-function ChessPatternSetup({
 
+function ChessPatternSetup({
     pattern,
     setPattern
-
 }) {
-
     const pieces = [
         "♔",
         "♕",
@@ -15,13 +13,10 @@ function ChessPatternSetup({
     ];
 
     const selectPiece = (piece) => {
-
         if (pattern.length >= 4) {
             return;
         }
-
         setPattern([...pattern, piece]);
-
     };
 
     return (
@@ -29,11 +24,9 @@ function ChessPatternSetup({
         <div>
 
             <h3>Select 4 Chess Pieces</h3>
-
             <div className="pieces">
 
                 {pieces.map((piece, index) => (
-
                     <button
                         key={index}
                         onClick={() =>
@@ -42,20 +35,15 @@ function ChessPatternSetup({
                     >
                         {piece}
                     </button>
-
                 ))}
 
             </div>
 
             <h4>
-                Pattern:
-                {pattern.join(" ")}
+                Pattern:{pattern.join(" ")}
             </h4>
-
         </div>
-
     );
-
 }
 
 export default ChessPatternSetup;

@@ -4,10 +4,9 @@ import axios from "axios";
 import ChessPatternsetup from "./ChessPatternsetup";
 
 function Register() {
-
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
     const [pattern, setPattern] = useState([]);
 
     const registerUser = async (e) => {
@@ -27,6 +26,7 @@ function Register() {
             const response = await axios.post(
                 "http://localhost:5000/register",
                 {
+                    username,
                     email,
                     password,
                     chessPattern: pattern
@@ -47,11 +47,21 @@ function Register() {
 
     return (
 
-        <div className="form-container">
+        <div className="form-wrapper">
 
             <h2>Register</h2>
+             <p className= "subtitle">Register successfully</p>
 
             <form onSubmit={registerUser}>
+
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) =>
+                        setUsername(e.target.value)
+                    }
+                />
 
                 <input
                     type="email"
@@ -79,13 +89,9 @@ function Register() {
                 <button type="submit">
                     Register
                 </button>
-
             </form>
-
         </div>
-
     );
-
 }
 
 export default Register;

@@ -9,8 +9,6 @@ const User = require("./models/User");
 
 const app = express();
 
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -27,14 +25,14 @@ mongoose.connect(process.env.MONGO_URI)
 });
 
 
-// ================= REGISTER =================
+// Register
 
 app.post("/register", async (req, res) => {
 
     try {
 
         const {
-
+            username,
             email,
             password,
             chessPattern
@@ -42,8 +40,7 @@ app.post("/register", async (req, res) => {
         } = req.body;
 
         // Check if user exists
-        const existingUser =
-        await User.findOne({ email });
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
 
@@ -51,41 +48,34 @@ app.post("/register", async (req, res) => {
 
                 message:
                 "User already exists"
-
             });
 
         }
 
-        // Generate salt
-        const salt =
-        await bcrypt.genSalt(10);
+        // Generates salt
+        const salt = await bcrypt.genSalt(10);
 
         // Hash password
-        const hashedPassword =
-        await bcrypt.hash(
+        const hashedPassword = await bcrypt.hash(
             password,
             salt
         );
 
-        // Create user
+        // Creates a new user
         const newUser = new User({
 
+            username,
             email,
-
             password: hashedPassword,
-
             chessPattern
 
         });
 
-        // Save user
         await newUser.save();
 
         res.json({
-
             message:
             "Registration successful"
-
         });
 
     }
@@ -103,7 +93,7 @@ app.post("/register", async (req, res) => {
 });
 
 
-// ================= LOGIN =================
+// Login
 
 app.post("/login", async (req, res) => {
 
@@ -117,23 +107,18 @@ app.post("/login", async (req, res) => {
         } = req.body;
 
         // Find user
-        const user =
-        await User.findOne({ email });
+        const user = await User.findOne({ email });
 
         if (!user) {
 
             return res.status(400).json({
-
                 message: "User not found"
-
             });
 
         }
 
-        // Compare password
-        const isMatch =
-        await bcrypt.compare(
-
+        // Compares password
+        const isMatch = await bcrypt.compare(
             password,
             user.password
 
@@ -142,37 +127,25 @@ app.post("/login", async (req, res) => {
         if (!isMatch) {
 
             return res.status(400).json({
-
                 message:
                 "Invalid password"
-
             });
-
         }
 
         // Send chess pattern
         res.json({
-
             message:
             "Password correct",
-
-            chessPattern:
-            user.chessPattern
-
+            chessPattern: user.chessPattern
         });
-
     }
 
     catch (error) {
 
         res.status(500).json({
-
             message: error.message
-
         });
-
     }
-
 });
 
 

@@ -1,21 +1,13 @@
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-
+import AuthContainer from "./pages/AuthContainer";
 import "./App.css";
 
 function App() {
 
     return (
-
-        <div className="app">
-
-            <Register />
-            <Login />
-
+        <div>
+            <AuthContainer />
         </div>
-
     );
-
 }
 
 export default App;

@@ -1,14 +1,11 @@
 import { useState } from "react";
 
 function ChessPatternVerify({
-
     savedPattern,
     onSuccess
-
 }) {
 
     const [selected, setSelected] = useState([]);
-
     const pieces = [
         "♔",
         "♕",
@@ -19,7 +16,6 @@ function ChessPatternVerify({
     ];
 
     const selectPiece = (piece) => {
-
         const newPattern = [
             ...selected,
             piece
@@ -28,16 +24,14 @@ function ChessPatternVerify({
         setSelected(newPattern);
 
         if (newPattern.length === 4) {
-
             const isCorrect =
                 JSON.stringify(newPattern)
                 ===
                 JSON.stringify(savedPattern);
 
             if (isCorrect) {
-
                 alert(
-                    "2FA Verification Successful"
+                    "Verification Successful"
                 );
 
                 onSuccess();
@@ -45,31 +39,22 @@ function ChessPatternVerify({
             }
 
             else {
-
                 alert(
                     "Incorrect Chess Pattern"
                 );
 
                 setSelected([]);
-
             }
-
         }
-
     };
 
     return (
 
         <div>
 
-            <h3>
-                Verify Chess Pattern
-            </h3>
-
+            <h3> Verify Chess Pattern </h3>
             <div className="pieces">
-
                 {pieces.map((piece, index) => (
-
                     <button
                         key={index}
                         onClick={() =>
@@ -78,20 +63,13 @@ function ChessPatternVerify({
                     >
                         {piece}
                     </button>
-
                 ))}
 
             </div>
 
-            <h4>
-                Selected:
-                {selected.join(" ")}
-            </h4>
-
+            <h4> Selected: {selected.join(" ")} </h4>
         </div>
-
     );
-
 }
 
 export default ChessPatternVerify;
