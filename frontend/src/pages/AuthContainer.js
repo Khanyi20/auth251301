@@ -16,7 +16,7 @@ function AuthContainer() {
 
                 <div className="overlay-content">
 
-                    <h1> Welcome Back </h1>
+                    <h1> Welcome </h1>
 
                     <p>
                         Secure authentication with
